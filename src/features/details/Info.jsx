@@ -1,9 +1,6 @@
-import { useDispatch, useSelector } from 'react-redux';
-
 import styled from 'styled-components';
-import { selectNeighbors } from '../store/details/details-selector';
-import { useEffect } from 'react';
-import { loadNeighborsByBorderder } from '../store/details/details-actions';
+
+import {useNeighbours} from './use-neighbours';
 
 const Wrapper = styled.section`
   margin-top: 3rem;
@@ -91,7 +88,7 @@ const Tag = styled.span`
   cursor: pointer;
 `;
 
-export const Info = (props) => {
+export const Info = props => {
   const {
     name,
     nativeName,
@@ -107,19 +104,11 @@ export const Info = (props) => {
     push,
   } = props;
 
-  const dispatch = useDispatch();
-  const neighbors = useSelector(selectNeighbors);
-
-  useEffect(() => {
-    if (borders.length) {
-      dispatch(loadNeighborsByBorderder(borders))
-    }
-  }, [borders, dispatch])
+  const neighbors = useNeighbours(borders);
 
   return (
     <Wrapper>
       <InfoImage src={flag} alt={name} />
-
       <div>
         <InfoTitle>{name}</InfoTitle>
         <ListGroup>
